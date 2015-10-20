@@ -1,6 +1,8 @@
 #include <LiquidCrystal.h>
 #include <Servo.h>
 
+#define N_ENTRIES 2
+
 // device phone number: 0466259105 
 // SIM card pin: 1234
 
@@ -26,19 +28,19 @@ void setup() {
 void loop() {
   serialEvent();
   lcd.home();
-  if (stringComplete){
-
-    for (int i = 0; i < length(authNumbers); i++){
-      if (input == authNumbers){
+  if (stringComplete){ // when string is sent by pressing Enter
+    for (int i = 0; i < N_ENTRIES; i++){
+      Serial.println(authNumbers[i]); // debugging
+      if (input == authNumbers[i]){
         lcd.print("Authorized");
         attempt = 0;
         lcd.setCursor(0,1);
         lcd.print("Attempt: ");
         lcd.print(attempt);
         digitalWrite(LEDPIN, HIGH);
-        gate.write(gateMin);    
-      }
-      else {
+        gate.write(gateMin);
+        break; // no need to continue if matches at least one of numbers    
+      }else {
         lcd.print("Unauthorized");
         lcd.setCursor(0,1);
         lcd.print("Attempt: ");
