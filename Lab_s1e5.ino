@@ -5,17 +5,12 @@
 #include <SoftwareSerial.h>
 
 typedef struct{
-  String fisrt_name;
-  String last_name;
+  String name;
   String phone_number;
 } Contact;
 
-void constact_set_first_name(String first_name, Contact* contact){
-  contact->fisrt_name = first_name;
-}
-
-void constact_set_last_name(String last_name, Contact* contact){
-  contact->last_name = last_name;
+void constact_set_name(String name, Contact* contact){
+  contact->name = name;
 }
 
 void constact_set_phone_num(String number, Contact* contact){
@@ -28,14 +23,35 @@ void GPRS_init(){
   delay(3000); // takes time to accept PIN
 }
 
-void GPRS_send_sms(String text){
-
+// Send SMS Message
+void GPRS_sms_send(String text){
+  Serial.write("AT+CMGF=1\r");
+  delay(3000);
+  Serial.write("AT+CMGS=\"0401959797\",129\r");
+  delay(3000);
+  Serial.write("Hello, World\r");
+  delay(3000);
 }
 
-
-void GPRS_send_sms(String text){
-
+// Select Phonebook Memory Storage
+void GPRS_phonebook_memory(){
+  Serial.write("AT+CPBS?\r");
+  delay(3000);
 }
+
+// Write Phonebook Entry
+void GPRS_phonebook_write(String text){
+  Serial.write("AT+CPBW=<index1>[, <number>,[<type>,[<text>]]]\r");
+  delay(3000); 
+}
+
+// Read Current Phonebook Entries
+void GPRS_phonebook_read(){
+  Serial.write("AT+CPBR=?\r");
+  delay(3000); 
+}
+
+// 
 
 #define N_ENTRIES 2
 
