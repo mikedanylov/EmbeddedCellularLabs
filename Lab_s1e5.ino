@@ -4,18 +4,18 @@
 #include <Servo.h>
 #include <SoftwareSerial.h>
 
-typedef struct{
-  String name;
-  String phone_number;
-} Contact;
+// typedef struct{
+//   String name;
+//   String phone_number;
+// } Contact;
 
-void constact_set_name(String name, Contact* contact){
-  contact->name = name;
-}
+// void constact_set_name(String name, Contact* contact){
+//   contact->name = name;
+// }
 
-void constact_set_phone_num(String number, Contact* contact){
-  contact->phone_number = number;
-}
+// void constact_set_phone_num(String number, Contact* contact){
+//   contact->phone_number = number;
+// }
 
 void GPRS_init(){
   // Enter PIN code: AT+CPIN=<pin>
@@ -51,15 +51,13 @@ void GPRS_phonebook_read(){
   delay(3000); 
 }
 
-// 
-
 #define N_ENTRIES 2
 
 // device phone number: 0466259105 
 
 SoftwareSerial GPRS(7, 8);
 unsigned char buffer[64]; // buffer array for data recieve over serial port
-int count=0;     // counter for buffer array 
+int count = 0;     // counter for buffer array 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 Servo gate;
 
@@ -78,8 +76,9 @@ void setup() {
   pinMode(LEDPIN, HIGH);
   gate.attach(9);
 
-
   GPRS.begin(19200);
+  delay(5000);
+  GPRS_init();
 }
 
 void loop() {
