@@ -114,6 +114,7 @@ void loop(){
                 else{
                     strcpy(unauthorized_entries[current_unauthorized_index].phone_number, caller_phone_number);
                     unauthorized_entries[current_unauthorized_index].attempts = 1;
+                    current_unauthorized_index++;
                 }
 
                 lcd.clear();
